@@ -20,12 +20,13 @@
                   "dimensions":[80, 60],
                   "mode":"centered"
                  }
-         }
+         },
  "game":{
          "walls":{
                   "stone":["stone.png", 50],
                   "earth":["earth.png", 10],
                   "door":{
+                          "sprite":"None",
                           "strongness":15,
                           "action":true,
                           "refresh":"after_action"
@@ -36,14 +37,23 @@
                    "grass":["grass.png", 11, 0.8],
                    "water":["water.png", 20, 0.5],
                    "stone":["stone.png", 50, 1],
-                   "earth":["earth.png", 10, 0.8]
+                   "earth":["earth.png", 10, 0.8],
                    "quicksand":{
+                                "sprite":"quicksand.png",
                                 "strongness":15,
                                 "walk_speed":0.1,
                                 "damage":"every",
                                 "damage_time":2,
                                 "damage_value":0.5
                                }
-                  }               
+                  },
+         "entity":{
+                   "player":{
+                             "max_life":10,
+                             "spawn":false,
+                             "dimension":0.5,
+                             "speed":2
+                            }
+                  }
         }
 }
