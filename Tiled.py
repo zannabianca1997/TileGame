@@ -4,6 +4,10 @@ Created on Fri Jun  2 01:10:24 2017
 
 @author: zanna
 """
+import logging
+
+# logging setup
+logger = logging.getLogger(__name__)
 
 # --- super classes of various things ---
 
@@ -30,8 +34,9 @@ class Activable(Tile):
         super().__init__(tile_data)
         # create the action dictionary. Initially, every action is bound to an error code
         self.actions = tile_data["actions"]
-        #TODO: check next line. it has to be written different
-        #self._action_dict = {action:(labda (blk, ent, env):self._errate_action(action)) for action in self.actions}
+        self._action_dict = {
+            action: (lambda blk, ent, env: self._errate_action(action, blk, ent, env))
+            for action in self.actions}
         
     def action(self, block_memory, action, entity, enviroment):
         if action in self.actions:
@@ -40,16 +45,16 @@ class Activable(Tile):
             self._errate_action(action, block_memory, entity, enviroment)
                 
     # --- inside methods ---
-    
-    #TODO: Check all down. You written this on train, no internet, smoked and tired. Please check.
+
     @classmethod
-    def _undef_action(cls, action):
+    def _undef_action(cls, action, block_memory, entity, enviroment):
         """Called if performed an action that has a name but no code"""
-        raise NotImplementedError #TODO: logs an error
+        logger.error("An action was performed, but no code specified.\n\tclass_name:{}\n\taction:{}".format(cls.__name__, action),)
+
     @classmethod
-    def _errate_action(cls, entity, enviroment):
+    def _errate_action(cls, action, block_memory, entity, enviroment):
         """Called if performed an illegal action"""
-        raise NotImplementedError #TODO: logs a warning
+        logger.warning("An action was performed, but on a tile that don't support it.\n\tclass_name:{}\n\taction:{}".format(cls.__name__, action))
     
 
 class Destructible(Activable):
@@ -58,7 +63,13 @@ class Destructible(Activable):
         """Extracting strongness data from tile_data, passing on super() the rest"""
         super().__init__(tile_data)
         self.strongness = tile_data["strongness"]  # durability of the tile
-        self.add_action()
+        self._add_action("break", self._break)
+
+    @classmethod
+    def _break(cls, block_memory, entity, enviroment):
+        """Break the block"""
+
+
         
 # --- classes for normal blocks ---
 
