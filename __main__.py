@@ -20,12 +20,3 @@ if __name__ == "__main__":
     with open(SETUPFILE) as setup_file:
         setups = json.load(setup_file)
         game_field.init(setups["game"])
-        
-        class TestDummy:
-            def print_test(self):
-                print(dir(self))
-                print(dir())
-                print(dir(__builtins__))
-                
-        a = TestDummy()
-        a.print_test()

@@ -16,3 +16,12 @@ floors_types = None
 
 def init(setup_data):
     pass
+
+
+def get_tile_by_name(tile_name):
+    """Get the tile class instance for that name"""
+    pass
+
+def get_tile_by_ID(tile_ID):
+    """Get the tile class instance for that ID"""
+    pass
