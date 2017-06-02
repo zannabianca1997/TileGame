@@ -28,7 +28,7 @@
                   "door":{
                           "sprite":"None",
                           "strongness":15,
-                          "action":true,
+                          "actions":["push", "pull", "open", "close", "change"],
                           "refresh":"after_action"
                          }
                  },
